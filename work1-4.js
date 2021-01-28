@@ -1,4 +1,4 @@
-"use strict"
+'use strict'
 
 //定義
 const task = [{ job: '机を片づける', genre: '掃除' }, { job: '牛乳を買う', genre: '買い物' }, { job: '散歩する', genre: '運動' }];
@@ -19,6 +19,7 @@ const addTask = () => {
 
 
 
+
 //初めから出てるもの
 console.log(bar);
 console.log(mention);
@@ -29,28 +30,52 @@ task.forEach((t, i) => {
 });
 
 //追加
-let inputTask = prompt('タスクを入力してください');
 
-if (inputTask === null) {
-    alert('キャンセルされました');
-} else if (inputTask === '') {
-    alert('入力されていません');
-    location.reload();
-} else {
+const work = () => {
+    let inputTask = prompt('タスクを入力してください');
 
-    //追加ジャンル
-    let inputGenre = prompt('ジャンルを入力してください');
-
-    if (inputGenre === null) {
+    if (inputTask === null) {
         alert('キャンセルされました');
-    } else if (inputGenre === '') {
+    } else if (inputTask === '') {
         alert('入力されていません');
         location.reload();
     } else {
-        task.push({ job: inputTask, genre: inputGenre });
-        addTask();
-        alert('新しいタスクを追加しました');
+
+        //追加ジャンル
+        let inputGenre = prompt('ジャンルを入力してください');
+
+        if (inputGenre === null) {
+            alert('キャンセルされました');
+        } else if (inputGenre === '') {
+            alert('入力されていません');
+            location.reload();
+        } else {
+            task.push({ job: inputTask, genre: inputGenre });
+            addTask();
+            alert('新しいタスクを追加しました');
+            let select = prompt('「確認、追加、消去、終了」４つのいずれかを入力してください');
+
+            if (select === '確認') {
+                addTask();
+                work();
+            } else if (select === '追加') {
+                alert('入力画面に移ります');
+                work();
+            } else if (select === '消去') {
+                let num = prompt('消去するタスク番号を入力してください');
+                task.splice(num, 1);
+                alert('削除しました');
+                addTask();
+                work();
+            } else {
+                alert('終わります');
+
+            }
+        }
+
     }
+
 }
 
-
+//実行
+work();
